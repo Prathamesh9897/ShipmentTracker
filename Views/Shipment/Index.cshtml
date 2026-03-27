@@ -1,0 +1,53 @@
+@model IEnumerable<ShipmentApp.Models.Shipment>
+@{
+    ViewData["Title"] = "Shipments";
+}
+
+<h1>Shipments</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Shipment</a>
+</p>
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="query" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search by ID, name, origin, destination..." />
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>Expected Delivery</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>@item.ShipmentId</td>
+                <td>@item.CustomerName</td>
+                <td>@item.Origin</td>
+                <td>@item.Destination</td>
+                <td>
+                    <span class="badge bg-@(item.Status == "Delayed" ? "danger" : (item.Status == "Delivered" ? "success" : "info")) text-dark">
+                        @item.Status
+                    </span>
+                </td>
+                <td>@item.ExpectedDeliveryDate.ToShortDateString()</td>
+                <td>
+                    <form asp-action="AutoDelay" class="d-inline">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-sm btn-warning" onclick="return confirm('Delay this shipment by 2 days?');">Delay</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

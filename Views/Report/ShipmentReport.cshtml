@@ -1,0 +1,89 @@
+@model IEnumerable<ShipmentApp.Models.Shipment>
+
+@{
+    ViewData["Title"] = "Shipment Report";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Shipment Report</h1>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <form method="get" class="row gx-3 gy-2 align-items-center">
+            <div class="col-sm-3">
+                <label class="visually-hidden" for="startDate">Start Date</label>
+                <input type="date" class="form-control" name="startDate" id="startDate" value="@ViewBag.StartDate" />
+            </div>
+            <div class="col-sm-3">
+                <label class="visually-hidden" for="endDate">End Date</label>
+                <input type="date" class="form-control" name="endDate" id="endDate" value="@ViewBag.EndDate" />
+            </div>
+            <div class="col-sm-3">
+                <label class="visually-hidden" for="status">Status</label>
+                <select class="form-select" name="status" id="status">
+                    <option value="">All Statuses</option>
+                    @if(ViewBag.Status == "Pending") { <option value="Pending" selected>Pending</option> } else { <option value="Pending">Pending</option> }
+                    @if(ViewBag.Status == "In Transit") { <option value="In Transit" selected>In Transit</option> } else { <option value="In Transit">In Transit</option> }
+                    @if(ViewBag.Status == "Delivered") { <option value="Delivered" selected>Delivered</option> } else { <option value="Delivered">Delivered</option> }
+                    @if(ViewBag.Status == "Delayed") { <option value="Delayed" selected>Delayed</option> } else { <option value="Delayed">Delayed</option> }
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a asp-action="ShipmentReport" class="btn btn-secondary">Clear</a>
+            </div>
+            <div class="col-auto ms-auto">
+                <a asp-action="ExportShipmentsExcel" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.Status" class="btn btn-success">
+                    <i class="fas fa-file-excel"></i> Export to Excel
+                </a>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Status</th>
+                        <th>Expected Delivery</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ShipmentId</td>
+                            <td>@item.CustomerName</td>
+                            <td>@item.Origin</td>
+                            <td>@item.Destination</td>
+                            <td>
+                                @if (item.Status == "Delivered")
+                                {
+                                    <span class="badge bg-success">@item.Status</span>
+                                }
+                                else if (item.Status == "In Transit")
+                                {
+                                    <span class="badge bg-warning text-dark">@item.Status</span>
+                                }
+                                else if (item.Status == "Delayed")
+                                {
+                                    <span class="badge bg-danger">@item.Status</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-info">@item.Status</span>
+                                }
+                            </td>
+                            <td>@item.ExpectedDeliveryDate.ToShortDateString()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

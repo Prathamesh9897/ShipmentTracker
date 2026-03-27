@@ -1,0 +1,226 @@
+@model ShipmentApp.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="text-dark">Dashboard Overview</h2>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Total Shipments Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Shipments</div>
+                        <div class="h5 mb-0 font-weight-bold text-dark">@Model.TotalShipments</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-box fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Shipments Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Upcoming Shipments</div>
+                        <div class="h5 mb-0 font-weight-bold text-dark">@Model.UpcomingShipments</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ongoing Shipments Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Ongoing Shipments</div>
+                        <div class="h5 mb-0 font-weight-bold text-dark">@Model.OngoingShipments</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-truck text-gray-300 fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delivered Shipments Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Delivered Shipments</div>
+                        <div class="h5 mb-0 font-weight-bold text-dark">@Model.DeliveredShipments</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-8 col-lg-7">
+        <div class="card bg-card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between bg-card-header">
+                <h6 class="m-0 font-weight-bold text-primary">Shipment Trend (Monthly)</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-area" style="height: 300px;">
+                    <canvas id="myAreaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-5">
+        <div class="card bg-card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between bg-card-header">
+                <h6 class="m-0 font-weight-bold text-primary">Status Distribution</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-pie pt-4 pb-2" style="height: 300px;">
+                    <canvas id="myPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.color = '#858796';
+
+        // Area Chart
+        var ctx = document.getElementById("myAreaChart");
+        var labels = @Html.Raw(Json.Serialize(Model.MonthlyLabels));
+        var dataValues = @Html.Raw(Json.Serialize(Model.MonthlyData));
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Shipments",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: dataValues,
+                    fill: true
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Pie Chart
+        var ctxPie = document.getElementById("myPieChart");
+        var statusLabels = @Html.Raw(Json.Serialize(Model.StatusLabels));
+        var statusData = @Html.Raw(Json.Serialize(Model.StatusData));
+        
+        var bgColors = [];
+        var hoverColors = [];
+        for (var i = 0; i < statusLabels.length; i++) {
+            if (statusLabels[i] === 'Delivered') {
+                bgColors.push('#1cc88a');
+                hoverColors.push('#17a673');
+            } else if (statusLabels[i] === 'In Transit') {
+                bgColors.push('#f6c23e');
+                hoverColors.push('#dfa82e');
+            } else if (statusLabels[i] === 'Pending') {
+                bgColors.push('#36b9cc');
+                hoverColors.push('#2c9faf');
+            } else if (statusLabels[i] === 'Delayed') {
+                bgColors.push('#e74a3b');
+                hoverColors.push('#be3e32');
+            } else {
+                bgColors.push('#4e73df');
+                hoverColors.push('#2e59d9');
+            }
+        }
+
+        var myPieChart = new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: statusLabels,
+                datasets: [{
+                    data: statusData,
+                    backgroundColor: bgColors,
+                    hoverBackgroundColor: hoverColors,
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            color: '#858796'
+                        }
+                    }
+                },
+                cutout: '80%',
+            },
+        });
+    </script>
+}

@@ -1,0 +1,62 @@
+@model IEnumerable<ShipmentApp.Models.Ship>
+
+@{
+    ViewData["Title"] = "Ship Master";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Ship Master</h1>
+    <a asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus fa-sm text-white-50"></i> Add Ship
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Ship Code</th>
+                        <th>Name</th>
+                        <th>IMO Number</th>
+                        <th>Type</th>
+                        <th>Flag</th>
+                        <th>Year</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ShipCode</td>
+                            <td>@item.ShipName</td>
+                            <td>@item.IMONumber</td>
+                            <td>@item.ShipType</td>
+                            <td>@item.FlagCountry</td>
+                            <td>@item.YearBuilt</td>
+                            <td>@item.Capacity</td>
+                            <td>
+                                @if(item.Status == "Active") {
+                                    <span class="badge bg-success">Active</span>
+                                } else {
+                                    <span class="badge bg-danger">Inactive</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

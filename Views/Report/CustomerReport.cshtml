@@ -1,0 +1,50 @@
+@model IEnumerable<ShipmentApp.Models.Customer>
+
+@{
+    ViewData["Title"] = "Customer Report";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Customer Report</h1>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-end">
+        <a asp-action="ExportCustomersExcel" class="btn btn-success">
+            <i class="fas fa-file-excel"></i> Export to Excel
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Company Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Location</th>
+                        <th>Date Added</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(!Model.Any()) {
+                        <tr><td colspan="6" class="text-center">No customers found.</td></tr>
+                    }
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.CustomerName</td>
+                            <td>@item.CompanyName</td>
+                            <td>@item.Email</td>
+                            <td>@item.Phone</td>
+                            <td>@item.City, @item.Country</td>
+                            <td>@item.CreatedDate.ToShortDateString()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

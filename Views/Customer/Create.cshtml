@@ -1,0 +1,75 @@
+@model ShipmentApp.Models.Customer
+
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">New Customer</h6>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="CustomerName" class="form-label"></label>
+                            <input asp-for="CustomerName" class="form-control rounded-pill" />
+                            <span asp-validation-for="CustomerName" class="text-danger text-xs"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="CompanyName" class="form-label"></label>
+                            <input asp-for="CompanyName" class="form-control rounded-pill" />
+                            <span asp-validation-for="CompanyName" class="text-danger text-xs"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control rounded-pill" type="email" />
+                            <span asp-validation-for="Email" class="text-danger text-xs"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Phone" class="form-label"></label>
+                            <input asp-for="Phone" class="form-control rounded-pill" />
+                            <span asp-validation-for="Phone" class="text-danger text-xs"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Address" class="form-label"></label>
+                        <input asp-for="Address" class="form-control rounded-pill" />
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <label asp-for="City" class="form-label"></label>
+                            <input asp-for="City" class="form-control rounded-pill" />
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="State" class="form-label"></label>
+                            <input asp-for="State" class="form-control rounded-pill" />
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Country" class="form-label"></label>
+                            <input asp-for="Country" class="form-control rounded-pill" />
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill me-2 px-4">Cancel</a>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">Save Customer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ShipmentApp</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ShipmentApp.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="wrapper d-flex align-items-stretch">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <a class="sidebar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-shipping-fast"></i> ShipmentApp
+            </a>
+
+            <ul class="list-unstyled components mb-5">
+                <li class="nav-item">
+                    <a class="nav-link text-white-50 text-uppercase fw-bold small mb-1 mt-3 px-3" style="font-size: 0.75rem;">Main</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Dashboard" asp-action="Index"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Shipment" asp-action="Create"><i class="fas fa-plus-circle"></i> Shipment Booking</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Shipment" asp-action="Index"><i class="fas fa-list"></i> Shipment List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white-50 text-uppercase fw-bold small mb-1 mt-3 px-3" style="font-size: 0.75rem;">Masters</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Customer" asp-action="Index"><i class="fas fa-users"></i> Customer Master</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Ship" asp-action="Index"><i class="fas fa-ship"></i> Ship Master</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white-50 text-uppercase fw-bold small mb-1 mt-3 px-3" style="font-size: 0.75rem;">Reports</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Report" asp-action="ShipmentReport"><i class="fas fa-file-invoice"></i> Shipment Report</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Report" asp-action="CustomerReport"><i class="fas fa-chart-bar"></i> Customer Report</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand topbar mb-4 static-top shadow">
+                <ul class="navbar-nav ms-auto ps-3 pe-3 w-100 justify-content-end">
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin User</span>
+                            <i class="fas fa-user-circle fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="container-fluid px-4 pb-4">
+                <main role="main">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

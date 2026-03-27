@@ -1,0 +1,87 @@
+@model ShipmentApp.Models.Ship
+
+@{
+    ViewData["Title"] = "Create Ship";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">New Ship</h6>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="ShipCode" class="form-label"></label>
+                            <input asp-for="ShipCode" class="form-control rounded-pill" />
+                            <span asp-validation-for="ShipCode" class="text-danger text-xs"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="ShipName" class="form-label"></label>
+                            <input asp-for="ShipName" class="form-control rounded-pill" />
+                            <span asp-validation-for="ShipName" class="text-danger text-xs"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="IMONumber" class="form-label"></label>
+                            <input asp-for="IMONumber" class="form-control rounded-pill" />
+                            <span asp-validation-for="IMONumber" class="text-danger text-xs"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="FlagCountry" class="form-label"></label>
+                            <input asp-for="FlagCountry" class="form-control rounded-pill" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="ShipType" class="form-label"></label>
+                            <select asp-for="ShipType" class="form-select rounded-pill">
+                                <option value="">-- Select Type --</option>
+                                <option value="Container">Container</option>
+                                <option value="Bulk Carrier">Bulk Carrier</option>
+                                <option value="Tanker">Tanker</option>
+                                <option value="Ro-Ro">Ro-Ro</option>
+                            </select>
+                            <span asp-validation-for="ShipType" class="text-danger text-xs"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Status" class="form-label"></label>
+                            <select asp-for="Status" class="form-select rounded-pill">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger text-xs"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label asp-for="YearBuilt" class="form-label"></label>
+                            <input asp-for="YearBuilt" class="form-control rounded-pill" type="number" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Capacity" class="form-label"></label>
+                            <input asp-for="Capacity" class="form-control rounded-pill" type="number" />
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill me-2 px-4">Cancel</a>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">Save Ship</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
